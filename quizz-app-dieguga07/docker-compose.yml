@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: Diego
+      MYSQL_DATABASE: cuestionario_php
+      MYSQL_USER: root@localhost
+      MYSQL_PASSWORD: Diego
+
+  php:
+    build: .
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+
