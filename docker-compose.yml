@@ -1,34 +1,18 @@
-version: "3.7"
+version: '3'
 
 services:
-  server:
-    image: fjortegan/nginx-fpm
-    ports:
-      - "80:80"
-    volumes:
-      - ./quizz-app-dieguga07/Parte_1/codigophp:/usr/share/nginx/html
-    links:
-      - fpm
-
-  fpm:
-    image: fjortegan/php-xdebug
-    volumes:
-      - ./quizz-app-dieguga07/Parte_1/codigophp:/var/www/html
-    # Sólo en máquinas Linux, comentar estas dos líneas en otros sistemas de lusers
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-  db:
-    image: mariadb
-    volumes:
-      - ./db-data:/var/lib/mysql/
+  mysql:
+    image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: pestillo
+      MYSQL_ROOT_PASSWORD: Diego
+      MYSQL_DATABASE: cuestionario_php
+      MYSQL_USER: root@localhost
+      MYSQL_PASSWORD: Diego
 
-  phpmyadmin:
-    image: phpmyadmin
+  php:
+    build: .
     ports:
       - "8080:80"
-    environment:
-      - PMA_ARBITRARY=1
+    depends_on:
+      - mysql
 
